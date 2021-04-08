@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+@model proyecto.Models.ViewModel.UsuariosVM;
+<h1>Inicio de Sesion</h1>
+
+<form asp-action="Login" asp-controller="Home" id="Registrar">
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label>Usuario</label>
+            <input type="text" asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label>Password</label>
+            <input type="password" asp-for="Clave" class="form-control" />
+            <span asp-validation-for="Clave"></span>
+        </div>
+    </div>
+    <div class="row">
+        <button type="submit" class="btn btn-primary">INICIAR SESION</button>
+    </div>
+</form>
