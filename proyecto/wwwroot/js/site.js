@@ -7,7 +7,7 @@ $(document).on('submit', '#Registrar', function (e) {
     e.preventDefault();
     $.ajax({
         beforeSend: function () {
-            $('#Registro button[type=submit]').prop('disabled', true);
+            $('#Registrar button[type=submit]').prop('disabled', true);
         },
         type: this.method,
         url: this.action,
@@ -20,7 +20,7 @@ $(document).on('submit', '#Registrar', function (e) {
             alert(xhr.responseJSON.message);
         },
         complete: function () {
-            $('#Registro button[type=submit]').prop('disabled', false);
+            $('#Registrar button[type=submit]').prop('disabled', false);
         }
     })
 })
@@ -35,7 +35,6 @@ $(document).on('submit', '#Login', function (e) {
         url: this.action,
         data: $(this).serialize(),
         success: function (data) {
-            console.log(data);
             alert('Bienvenido ' + data.nombre);
             window.location.href = "/Home";
         },
@@ -44,6 +43,50 @@ $(document).on('submit', '#Login', function (e) {
         },
         complete: function () {
             $('#Login button[type=submit]').prop('disabled', false);
+        }
+    })
+})
+
+$(document).on('submit', '#Actividad', function (e) {
+    e.preventDefault();
+    $.ajax({
+        beforeSend: function () {
+            $('#Actividad button[type=submit]').prop('disabled', true);
+        },
+        type: this.method,
+        url: this.action,
+        data: $(this).serialize(),
+        success: function (data) {
+            alert('Actividad Registrada con exito');
+            window.location.href = "/Actividad";
+        },
+        error: function (xhr, status) {
+            alert(xhr.responseJSON.message);
+        },
+        complete: function () {
+            $('#Actividad button[type=submit]').prop('disabled', false);
+        }
+    })
+})
+
+$(document).on('submit', '#ActividadEdit', function (e) {
+    e.preventDefault();
+    $.ajax({
+        beforeSend: function () {
+            $('#ActividadEdit button[type=submit]').prop('disabled', true);
+        },
+        type: this.method,
+        url: this.action,
+        data: $(this).serialize(),
+        success: function (data) {
+            alert('Actividad Editada con exito');
+            window.location.href = "/Actividad";
+        },
+        error: function (xhr, status) {
+            alert(xhr.responseJSON.message);
+        },
+        complete: function () {
+            $('#ActividadEdit button[type=submit]').prop('disabled', false);
         }
     })
 })
