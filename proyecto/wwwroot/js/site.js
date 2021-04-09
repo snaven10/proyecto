@@ -90,3 +90,39 @@ $(document).on('submit', '#ActividadEdit', function (e) {
         }
     })
 })
+
+$(document).ready(function () {
+    //Total llamadas
+    $.ajax({
+        type: "GET",
+        url: "/Dashboard/TotalLlamadas",
+        success: function (data) {
+            $(".Total_llamadas").text(data.total);
+        },
+        error: function (xhr, status) {
+            alert(xhr.responseJSON.message);
+        }
+    })
+    //Total llamadas resueltas
+    $.ajax({
+        type: "GET",
+        url: "/Dashboard/TotalLlamadasRes",
+        success: function (data) {
+            $(".Total_llamadasRes").text(data.total);
+        },
+        error: function (xhr, status) {
+            alert(xhr.responseJSON.message);
+        }
+    })
+    //Total llamadas no resueltas
+    $.ajax({
+        type: "GET",
+        url: "/Dashboard/TotalLlamadasNoRes",
+        success: function (data) {
+            $(".Total_llamadasNoRes").text(data.total);
+        },
+        error: function (xhr, status) {
+            alert(xhr.responseJSON.message);
+        }
+    })
+});

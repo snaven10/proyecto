@@ -1,0 +1,36 @@
+﻿@using proyecto.Helper
+@using System.Security.Principal;
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total de llamadas atendidas</h5>
+                        <p class="card-text Total_llamadas"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total de llamadas atendidas resueltas</h5>
+                        <p class="card-text Total_llamadasRes"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total de llamadas atendidas no resueltas</h5>
+                        <p class="card-text Total_llamadasNoRes"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
