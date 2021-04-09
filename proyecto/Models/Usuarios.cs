@@ -23,5 +23,8 @@ namespace proyecto.Models
         [MinLength(5, ErrorMessage = "Escriba al menos 5 caracteres")]
         [MaxLength(50, ErrorMessage = "Escriba un maximo de 50 caracteres")]
         public string Clave { get; set; }
+
+        [ForeignKey("IdUsuario")]
+        public virtual List<UsuarioRol> Roles { get; set; }
     }
 }

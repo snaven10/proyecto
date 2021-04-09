@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +36,17 @@ namespace proyecto
             });
             services.AddControllersWithViews();
             services.AddDbContext<ProyectoCTX>(options => options.UseSqlServer(Configuration.GetConnectionString("ProyectoCTX")));
+            services.AddAuthentication("CookieAuthentication")
+            .AddCookie("CookieAuthentication", config =>
+            {
+                config.Cookie.Name = "UserLoginCookie";
+                config.LoginPath = "/Login";
+                config.Events.OnRedirectToAccessDenied = context =>
+                {
+                    context.Response.Redirect("/Login");
+                    return Task.CompletedTask;
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,8 +66,13 @@ namespace proyecto
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCookiePolicy();
+            // who are you?  
+            app.UseAuthentication();
 
+            // are you allowed?  
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

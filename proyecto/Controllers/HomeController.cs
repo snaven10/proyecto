@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using proyecto.Helper;
 using proyecto.Models;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace proyecto.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
 
@@ -23,6 +25,7 @@ namespace proyecto.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Registro() 
         {
             return View();
@@ -31,6 +34,7 @@ namespace proyecto.Controllers
         [BindProperty]
         public Usuarios Usuario { get; set; }
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Registrar()
         {
             var result = await ctx.Usuarios.Where(x => x.Nombre == Usuario.Nombre).SingleOrDefaultAsync();
@@ -56,11 +60,6 @@ namespace proyecto.Controllers
                     return Created($"/Usuarios/{Usuario.IdUsuario}", Usuario);
                 }
             }
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

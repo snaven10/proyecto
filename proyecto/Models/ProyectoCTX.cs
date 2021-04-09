@@ -13,6 +13,13 @@ namespace proyecto.Models
 
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<UsuarioRol>().HasKey(x=>new { x.IdUsuario, x.IdRol });
+        }
         public DbSet<Usuarios> Usuarios { get; set; }
+        public DbSet<Roles> Roles { get; set; }
+        public DbSet<UsuarioRol> UsuarioRol { get; set; }
+        public DbSet<Actividades> Actividades { get; set; }
     }
 }
