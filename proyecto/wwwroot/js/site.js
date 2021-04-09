@@ -14,7 +14,7 @@ $(document).on('submit', '#Registrar', function (e) {
         data: $(this).serialize(),
         success: function (data) {
             alert('Usuario registrado con exito.');
-            window.location.href = "/Login";
+            window.location.href = "/Usuario";
         },
         error: function (xhr, status) {
             alert(xhr.responseJSON.message);

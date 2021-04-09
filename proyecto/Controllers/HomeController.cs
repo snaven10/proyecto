@@ -31,37 +31,6 @@ namespace proyecto.Controllers
             return View();
         }
 
-        [BindProperty]
-        public Usuarios Usuario { get; set; }
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> Registrar()
-        {
-            var result = await ctx.Usuarios.Where(x => x.Nombre == Usuario.Nombre).SingleOrDefaultAsync();
-            if(result != null)
-            {
-                return BadRequest(new { Message = "El usuario ya existe, seleccione otro." });
-            }
-            else
-            {
-                if(!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState.SelectMany(x => x.Value.Errors.Select(y => y.ErrorMessage)).ToList());
-                }
-                else
-                {
-                    var hash = HashHelper.Hash(Usuario.Clave);
-                    Usuario.Clave = hash.Password;
-                    Usuario.Sal = hash.Salt;
-                    ctx.Usuarios.Add(Usuario);
-                    await ctx.SaveChangesAsync();
-                    Usuario.Clave = "";
-                    Usuario.Sal = "";
-                    return Created($"/Usuarios/{Usuario.IdUsuario}", Usuario);
-                }
-            }
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

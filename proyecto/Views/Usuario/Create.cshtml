@@ -1,60 +1,32 @@
-﻿@using proyecto.Helper
-@using System.Security.Principal;
-@model proyecto.Models.Actividades;
-@{
-    ViewData["Title"] = "Create";
-    string Date = DateTime.Now.ToString("dd-MM-yyyy");
+﻿@{
+    ViewData["Title"] = "Registro";
 }
+@model proyecto.Models.Usuarios;
+<h1>Registrar Agente</h1>
 
-<h1>Crear actividad</h1>
-
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" asp-controller="Actividad" id="Actividad">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Duracion_llamada" class="control-label"></label>
-                <input asp-for="Duracion_llamada" class="form-control" />
-                <span asp-validation-for="Duracion_llamada" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
-            </div>
-            <input asp-for="Fecha" class="form-control" type="hidden" value="@Date" />
-            <input asp-for="IdUsuario" class="form-control" type="hidden" value="@SessionHelper.GetNameIdentifier(User)" />
-            <div class="form-group">
-                <label asp-for="Tipo" class="control-label"></label>
-                <select class="form-control" asp-for="Tipo">
-                    <option value="">Seleccione</option>
-                    <option value="Duda">Duda</option>
-                    <option value="Consulta">Consulta</option>
-                    <option value="Reclamo">Reclamo</option>
-                </select>
-                <span asp-validation-for="Tipo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Resolvio" class="control-label"></label>
-                <select class="form-control" asp-for="Resolvio">
-                    <option value="">Seleccione</option>
-                    <option value="Resolvio">Resolvio</option>
-                    <option value="No Resolvio">Pendiente de respuesta</option>
-                </select>
-                <span asp-validation-for="Resolvio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Create" asp-controller="Usuario" id="Registrar">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label>Usuario</label>
+            <input type="text" asp-for="Nombre" class="form-control" />
+            <span asp-validation-for="Nombre" class="text-danger"></span>
+        </div>
     </div>
-</div>
-
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label>Password</label>
+            <input type="password" asp-for="Clave" class="form-control" />
+            <span asp-validation-for="Clave" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <button type="submit" class="btn btn-primary">REGISTRAR</button>
+    </div>
+</form>
 <div>
     <a asp-action="Index">Atras</a>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

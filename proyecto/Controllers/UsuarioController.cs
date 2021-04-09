@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using proyecto.Helper;
 using proyecto.Models;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,18 @@ namespace proyecto.Controllers
         // GET: UsuarioController
         public async Task<IActionResult> Index()
         {
-            return View(await ctx.Actividades.ToListAsync());
-        }
-
-        // GET: UsuarioController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+            var result = new List<Usuarios>();
+            result = (
+                from au in ctx.Usuarios
+                from aur in ctx.UsuarioRol.Where(x => x.IdUsuario == au.IdUsuario)
+                from ar in ctx.Roles.Where(x => x.IdRol == aur.IdRol && x.Descripcion == "Agente")
+                select new Usuarios
+                {
+                    IdUsuario = au.IdUsuario,
+                    Nombre = au.Nombre,
+                }
+            ).ToList();
+            return View(result);
         }
 
         // GET: UsuarioController/Create
@@ -38,60 +44,69 @@ namespace proyecto.Controllers
         }
 
         // POST: UsuarioController/Create
+        [BindProperty]
+        public Usuarios Usuario { get; set; }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [AllowAnonymous]
+        public async Task<IActionResult> Create(IFormCollection collection)
         {
-            try
+            var result = await ctx.Usuarios.Where(x => x.Nombre == Usuario.Nombre).SingleOrDefaultAsync();
+            if (result != null)
             {
-                return RedirectToAction(nameof(Index));
+                return BadRequest(new { Message = "El usuario ya existe, seleccione otro." });
             }
-            catch
+            else
             {
-                return View();
-            }
-        }
-
-        // GET: UsuarioController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: UsuarioController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState.SelectMany(x => x.Value.Errors.Select(y => y.ErrorMessage)).ToList());
+                }
+                else
+                {
+                    var hash = HashHelper.Hash(Usuario.Clave);
+                    Usuario.Clave = hash.Password;
+                    Usuario.Sal = hash.Salt;
+                    ctx.Usuarios.Add(Usuario);
+                    await ctx.SaveChangesAsync();
+                    var role = ctx.Roles.Where(x => x.Descripcion == "Agente").ToList();
+                    ctx.UsuarioRol.Add(new UsuarioRol
+                    {
+                        IdUsuario = Usuario.IdUsuario,
+                        IdRol = role[0].IdRol
+                    });
+                    await ctx.SaveChangesAsync();
+                    return Created($"/Usuarios/{Usuario.IdUsuario}", Usuario);
+                }
             }
         }
 
         // GET: UsuarioController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var actividad = await ctx.Usuarios
+                .FirstOrDefaultAsync(m => m.IdUsuario == id);
+            if (actividad == null)
+            {
+                return NotFound();
+            }
+
+            return View(actividad);
         }
 
         // POST: UsuarioController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var usuario = await ctx.Usuarios.FindAsync(id);
+            ctx.Usuarios.Remove(usuario);
+            await ctx.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

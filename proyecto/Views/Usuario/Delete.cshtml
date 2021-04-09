@@ -1,4 +1,4 @@
-﻿@model proyecto.Models.Actividades
+﻿@model proyecto.Models.Usuarios
 
 @{
     ViewData["Title"] = "Eliminar";
@@ -11,39 +11,15 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Duracion_llamada)
+            @Html.DisplayNameFor(model => model.Nombre)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Duracion_llamada)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Fecha)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Fecha)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Tipo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Tipo)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Resolvio)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Resolvio)
+            @Html.DisplayFor(model => model.Nombre)
         </dd>
     </dl>
 
     <form asp-action="Delete">
-        <input type="hidden" asp-for="IdActividad" />
+        <input type="hidden" asp-for="IdUsuario" />
         <input type="submit" value="Eliminar" class="btn btn-danger" /> |
         <a asp-action="Index">Atras</a>
     </form>

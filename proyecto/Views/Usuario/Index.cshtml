@@ -1,10 +1,8 @@
-﻿@using proyecto.Helper
-@using System.Security.Principal;
-@model IEnumerable<proyecto.Models.Usuarios>
+﻿@model IEnumerable<proyecto.Models.Usuarios>
 @{
     ViewData["Title"] = "Usuarios";
 }
-<h1>Actividades</h1>
+<h1>Usuarios</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-info">Agregar</a>
@@ -13,19 +11,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Duracion_llamada)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Resolvio)
+                @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th></th>
         </tr>
@@ -35,23 +21,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Duracion_llamada)
+                    @Html.DisplayFor(modelItem => item.Nombre)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fecha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Tipo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Resolvio)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdActividad">Editar</a> |
-                    <a asp-action="Delete" asp-route-id="@item.IdActividad">Eliminar</a>
+                    <a asp-action="Delete" asp-route-id="@item.IdUsuario">Eliminar</a>
                 </td>
             </tr>
         }
