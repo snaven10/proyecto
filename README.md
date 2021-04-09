@@ -4,9 +4,11 @@
 + En caso que quieras trabajar con el [Visual Studio Code](https://code.visualstudio.com/download) tienes que tener [dotnet](https://dotnet.microsoft.com/download/dotnet/3.1) para poder ejecutar los comandos desde la terminal
 
 ##  Creacion de base de datos
-+ Crear una base de datos con el nombre que gusten ejemplo: ``prueba``
++ Crear una base de datos con el nombre que gusten ejemplo: ``test``
 + Copiar y pegar el contenido del archivo ``TABLAS`` Es desir ejecutarlos escriptenla bd recien creada y nos crearia 4 Tablas
-
+## Datos del login
++ Usuario: ``supervisor``
++ Password: ``SUPERvisor1.``
 ##  Pre configuraciones para poder ejecutar el proyecto.
 
 ### Configuraciones para la carpeta proyecto es desir el proyecto sin compilar
